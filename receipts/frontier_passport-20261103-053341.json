@@ -1,0 +1,34 @@
+{
+  "profile": "chihna-validation-receipt/0.1",
+  "subject": {
+    "target": "OpenRouterTarget",
+    "model_id": "deepseek/deepseek-v4.1-flash",
+    "authorization_basis": ""
+  },
+  "campaign": {
+    "campaign_id": "frontier_passport-20261103-053341",
+    "cases_total": 38,
+    "cases_passed": 3,
+    "cases_failed": 0,
+    "cases_inconclusive": 35,
+    "cases_not_sent": 0,
+    "technique_classes": [
+      ""
+    ],
+    "evidence_pack_sha256": "42285c5ba591f5e0b32738058efad3667e1557b1012492c6100d1d0b29a76704",
+    "case_log_sha256": "65cb21e294961d8a910d3eb65c3060249bed727fce13c189d7126f721d140c43"
+  },
+  "runtime": {
+    "ledger_agent": "chihna-matrix-deepseek",
+    "ledger_entries": 39,
+    "ledger_head_sha256": "9b8d0f6b2b3bb17b3a392a81a6d5fc41f93324761038dfffc3157dac0474e7e3"
+  },
+  "attestation": {
+    "evaluation_sha256": "42285c5ba591f5e0b32738058efad3667e1557b1012492c6100d1d0b29a76704",
+    "continuity": true
+  },
+  "verification": {
+    "verified": true,
+    "issues": []
+  }
+}

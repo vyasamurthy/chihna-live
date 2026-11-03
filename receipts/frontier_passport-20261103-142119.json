@@ -1,0 +1,34 @@
+{
+  "profile": "chihna-validation-receipt/0.1",
+  "subject": {
+    "target": "OpenRouterTarget",
+    "model_id": "google/gemini-3.8-flash",
+    "authorization_basis": ""
+  },
+  "campaign": {
+    "campaign_id": "frontier_passport-20261103-142119",
+    "cases_total": 38,
+    "cases_passed": 32,
+    "cases_failed": 0,
+    "cases_inconclusive": 6,
+    "cases_not_sent": 0,
+    "technique_classes": [
+      ""
+    ],
+    "evidence_pack_sha256": "9fa94539746b285eab530f2500561934f813eef2873c670380a11be86cc5ac4f",
+    "case_log_sha256": "5f5b624a6dfed5680b3550ef95ffe26913cfce0649172b693591b0de18049c5f"
+  },
+  "runtime": {
+    "ledger_agent": "vyasamurthy",
+    "ledger_entries": 39,
+    "ledger_head_sha256": "f21e483ca7baf4d3d1d2331dfb5ecc788416e912affd7c1768c037adeabeca64"
+  },
+  "attestation": {
+    "evaluation_sha256": "9fa94539746b285eab530f2500561934f813eef2873c670380a11be86cc5ac4f",
+    "continuity": true
+  },
+  "verification": {
+    "verified": true,
+    "issues": []
+  }
+}

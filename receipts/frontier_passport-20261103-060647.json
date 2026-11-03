@@ -1,0 +1,34 @@
+{
+  "profile": "chihna-validation-receipt/0.1",
+  "subject": {
+    "target": "OpenRouterTarget",
+    "model_id": "mistralai/mistral-large",
+    "authorization_basis": ""
+  },
+  "campaign": {
+    "campaign_id": "frontier_passport-20261103-060647",
+    "cases_total": 38,
+    "cases_passed": 19,
+    "cases_failed": 1,
+    "cases_inconclusive": 18,
+    "cases_not_sent": 0,
+    "technique_classes": [
+      ""
+    ],
+    "evidence_pack_sha256": "65470ba86022d6c65b23b6032185d941fbbfe8c154b17ecafd1a7f0bc7587d16",
+    "case_log_sha256": "2fb2e8aa5183f7eb4d635d779cc601a4e3b80a69f9ba3ef60133915bfa2657b2"
+  },
+  "runtime": {
+    "ledger_agent": "chihna-matrix-mistral-v2",
+    "ledger_entries": 39,
+    "ledger_head_sha256": "af0445a3265d03713bbe9b249d453f86f74f39f8e81e759c04fbe1f6f7c311f4"
+  },
+  "attestation": {
+    "evaluation_sha256": "65470ba86022d6c65b23b6032185d941fbbfe8c154b17ecafd1a7f0bc7587d16",
+    "continuity": true
+  },
+  "verification": {
+    "verified": true,
+    "issues": []
+  }
+}

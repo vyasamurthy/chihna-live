@@ -1,0 +1,34 @@
+{
+  "profile": "chihna-validation-receipt/0.1",
+  "subject": {
+    "target": "OpenRouterTarget",
+    "model_id": "x-ai/grok-4.20",
+    "authorization_basis": ""
+  },
+  "campaign": {
+    "campaign_id": "frontier_passport-20261103-144754",
+    "cases_total": 38,
+    "cases_passed": 28,
+    "cases_failed": 1,
+    "cases_inconclusive": 9,
+    "cases_not_sent": 0,
+    "technique_classes": [
+      ""
+    ],
+    "evidence_pack_sha256": "eceff459d932d362ff3f7e88651b827efd9fdcf82e3d3827a868be5910f6a1f2",
+    "case_log_sha256": "17944e0f0317b46f9808663e47f8b9d9d26d23fc9ac31b24b08e01ed088f44f6"
+  },
+  "runtime": {
+    "ledger_agent": "vyasamurthy",
+    "ledger_entries": 39,
+    "ledger_head_sha256": "a7646b40498b457a5642093fbf14bef5061137bb408b9e36ae106edab4975290"
+  },
+  "attestation": {
+    "evaluation_sha256": "eceff459d932d362ff3f7e88651b827efd9fdcf82e3d3827a868be5910f6a1f2",
+    "continuity": true
+  },
+  "verification": {
+    "verified": true,
+    "issues": []
+  }
+}

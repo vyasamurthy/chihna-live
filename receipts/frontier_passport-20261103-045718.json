@@ -1,0 +1,34 @@
+{
+  "profile": "chihna-validation-receipt/0.1",
+  "subject": {
+    "target": "",
+    "model_id": "anthropic/claude-opus-5.5",
+    "authorization_basis": ""
+  },
+  "campaign": {
+    "campaign_id": "frontier_passport-20261103-045718",
+    "cases_total": 38,
+    "cases_passed": 13,
+    "cases_failed": 0,
+    "cases_inconclusive": 25,
+    "cases_not_sent": 0,
+    "technique_classes": [
+      ""
+    ],
+    "evidence_pack_sha256": "3f2decfa590de8e83e4ca62ffe1fba4fd59f2f7f454e5742c7f62edf42e9b2d8",
+    "case_log_sha256": "38a30305aff58999721fabd61b614fec7083fe0170bd023133422f678470845e"
+  },
+  "runtime": {
+    "ledger_agent": "chihna-phase1-opus",
+    "ledger_entries": 39,
+    "ledger_head_sha256": "9a77c2beefe0d240d4667ca8589db4f1700bbda796e2736ef6bd6156384cd7f3"
+  },
+  "attestation": {
+    "evaluation_sha256": "3f2decfa590de8e83e4ca62ffe1fba4fd59f2f7f454e5742c7f62edf42e9b2d8",
+    "continuity": true
+  },
+  "verification": {
+    "verified": true,
+    "issues": []
+  }
+}

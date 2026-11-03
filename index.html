@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chihna — the proof layer for what AI systems withstood</title>
+<meta name="description" content="Execution receipts record what agents did. A chihna records what they withstood — adversarial validation evidence, with its inconclusives stated, verifiable by anyone with a JSON parser and a hash function.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@300;400&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/chihna.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-in">
+    <a class="brand" href="index.html">
+      <img src="assets/venture-vertex-logo.png" alt="Venture Vertex">
+      <span class="bn">CHIHNA</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" aria-current="page">Thesis</a>
+      <a href="verifier.html">Verifier</a>
+      <a href="artifacts.html">Artifacts</a>
+      <a href="limits.html">Honest limits</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <svg class="burst" id="burst" viewBox="0 0 1200 1200" aria-hidden="true"></svg>
+  <div class="wrap">
+    <span class="kick">चिह्न &middot; CHIHNA &middot; MARK, SIGN, SYMBOL</span>
+    <h1>A receipt that hides its <span class="em">inconclusives</span> is not evidence.</h1>
+    <p class="lede">The agent-receipts wave is standardising what systems <em>did</em>. Nobody was recording what they <em>withstood</em> — and nobody was being forced to say how often the answer was unclear. Chihna is the proof layer for the second half, and the honest-statistics rule is enforced by the format rather than promised in prose.</p>
+
+    <div class="stats">
+      <div class="stats-hd">
+        <span>LIVE PORTFOLIO &middot; AVH ENGINE</span>
+        <span class="r">COUNTS SUM &middot; 392 + 6 + 210 + 0 = 608</span>
+      </div>
+      <div class="stats-grid">
+        <div class="stat"><b>16</b><span>Published campaigns</span></div>
+        <div class="stat"><b>608</b><span>Cases executed</span></div>
+        <div class="stat"><b>392</b><span>Passed</span></div>
+        <div class="stat"><b>6</b><span>Failed</span></div>
+        <div class="stat"><b>210</b><span>Inconclusive &mdash; stated, not hidden</span></div>
+        <div class="stat"><b class="z">0</b><span>Not sent</span></div>
+        <div class="stat"><b>$1.37</b><span>Total spend against the $150 platform cap</span></div>
+        <div class="stat"><b>387</b><span>CI-gated tests</span></div>
+      </div>
+      <div class="stats-ft">Read from the published passport bundles, not asserted. Every campaign links its own validation receipt on the artifacts page, and every receipt can be checked in your browser.</div>
+    </div>
+  </div>
+</section>
+
+<section class="pad">
+  <div class="wrap cols">
+    <div>
+      <span class="kick">THE SECOND HALF</span>
+      <h2>What agents did, and what they withstood.</h2>
+      <p>Execution receipts, signed receipts and compliance receipts all record the runtime half &mdash; actions taken. That half is being standardised quickly and well. The withstood half &mdash; the adversarial validation evidence, what a system survived and what honestly happened &mdash; has no carrier.</p>
+      <p>The validation receipt is that carrier. It composes with the receipts wave rather than competing with it: the runtime half is theirs, the withstood half is this profile, and the ledger head is the join point. Together they are the full chihna.</p>
+    </div>
+    <div>
+      <span class="kick">THE NAME</span>
+      <h2>The mark from which the claim is inferred.</h2>
+      <p>In Nyaya logic a <em>chihna</em> is the evidentiary mark from which a claim is inferred &mdash; the smoke from which fire is known. That is the thesis in one word: evidence is a mark, not an assertion; verdicts are inferred from marks, never trusted from vendors.</p>
+      <p><strong>Chihna</strong> is the proof layer. <strong>AVH</strong> is the engine that produces it &mdash; the adversarial validation harness. Each published artifact is <em>a chihna</em>: a portable proof object of campaign, ledger and attestations.</p>
+    </div>
+  </div>
+</section>
+
+<section class="pad dark">
+  <div class="wrap">
+    <span class="kick">THE HONEST-STATISTICS RULE</span>
+    <h2>Non-conformant by format, not discouraged by policy.</h2>
+    <p>The industry reports pass rates and the industry hides inconclusives. A rule that depends on the issuer's good manners is not a rule, so this one is carried by the receipt format itself and checked by the verifier.</p>
+    <ul class="gd">
+      <li><strong>Inconclusive is a normative field.</strong> A receipt omitting <span class="mono">cases_inconclusive</span> fails validation. There is no conformant way to publish a campaign without saying how often the answer was unclear.</li>
+      <li><strong>Counts must sum.</strong> <span class="mono">passed + failed + inconclusive + not_sent = total</span>, checked arithmetically. A receipt whose numbers do not reconcile is non-conformant.</li>
+      <li><strong>Inconclusive is not pass.</strong> It is reported in the receipt, in the report, and on this site, everywhere the campaign appears.</li>
+      <li><strong>Reliability needs an interval, not a streak.</strong> A <span class="mono">reliable-pass</span> requires the Wilson 95% lower bound above threshold, so five passes out of five cannot claim ninety percent.</li>
+    </ul>
+    <div class="rulebox">
+      <p>Of the 608 cases published here, <strong>210 are inconclusive</strong> &mdash; roughly a third. A deterministic analyser routinely produces them, and a conservative judge leaves genuinely ambiguous responses unresolved by design. Hiding them is the exact failure mode this format makes impossible.</p>
+    </div>
+
+    <div class="hsb" id="hsb">
+      <div class="hsb-hd">
+        <span>PORTFOLIO VERDICTS &middot; ALL PUBLISHED CAMPAIGNS</span>
+        <span class="r">THE GOLD BAND IS THE ARGUMENT</span>
+      </div>
+      <div class="hsb-body">
+        <div class="hsb-bar"></div>
+        <div class="hsb-eq"></div>
+        <div class="hsb-key">
+          <span><i style="background:rgba(138,147,180,.5)"></i>passed</span>
+          <span><i style="background:var(--gold)"></i>inconclusive &mdash; not folded into a pass rate</span>
+          <span><i style="background:var(--crit)"></i>failed</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pad">
+  <div class="wrap">
+    <span class="kick">EVERY CASE &middot; NOTHING AGGREGATED AWAY</span>
+    <h2>Six hundred and eight verdicts, one cell each.</h2>
+    <p>Pass rates are where inconclusives go to disappear. So here is every published case as its own cell &mdash; sixteen campaigns down, thirty-eight cases across, each cell the verdict actually recorded in that campaign's evidence pack.</p>
+    <p>You do not need to read the numbers to see the finding. Roughly a third of the grid is gold.</p>
+
+    <div class="mx" id="mx">
+      <div class="mx-hd">
+        <span>PER-CASE VERDICT MATRIX &middot; 16 CAMPAIGNS &times; 38 CASES</span>
+        <span class="st mono" id="mxSt">IDLE</span>
+      </div>
+      <div class="mx-scroll"><div class="mx-grid" id="mxGrid"></div></div>
+      <div class="mx-ft" id="mxFtWrap">
+        <span id="mxFt"></span>
+        <span class="rp"><button id="mxBtn" type="button">Replay all 608 cases</button></span>
+      </div>
+    </div>
+
+    <p class="note">Six cells are red: the six failures across the whole portfolio, each recorded at critical severity. The critic challenged every non-trivial verdict in these campaigns and upheld all 608 &mdash; stated because an overturn rate of zero is a fact about the evaluator, not a boast about it.</p>
+  </div>
+</section>
+
+<section class="pad">
+  <div class="wrap">
+    <span class="kick">ARCHITECTURE</span>
+    <h2>Four layers, and the one you can check from a browser.</h2>
+    <p>Each layer below is mapped to shipped modules. The receipt layer is what travels; the relying-party layer is who checks.</p>
+    <div class="cards">
+      <div>
+        <span class="meta">L1 &middot; EVIDENCE</span>
+        <h3>What happened</h3>
+        <p>Append-only case log, evidence pack with verdict counts and Wilson intervals, hash-chained behaviour ledger, append-only budget ledger. Built for tamper-evidence before readability.</p>
+      </div>
+      <div>
+        <span class="meta">L2 &middot; PROOF</span>
+        <h3>What binds</h3>
+        <p>Evaluation attestation binds the campaign to its pack by SHA-256; continuity attestation binds the pack to the ledger head. Acceptance gates are evaluated against the pack, and forcing one attaches the failed gates to the record.</p>
+      </div>
+      <div>
+        <span class="meta">L3 &middot; RECEIPT</span>
+        <h3>What travels</h3>
+        <p>The validation receipt, profile 0.1 &mdash; one JSON object a relying party checks without the artifacts. Subject, honest counts, evidence digests, ledger head, and the issuer's own verification result, labelled as a claim.</p>
+      </div>
+      <div>
+        <span class="meta">L4 &middot; RELYING PARTY</span>
+        <h3>Who checks</h3>
+        <p>Two keyless tiers. The receipt tier runs here in your browser in seconds. The evidence tier re-derives everything from the artifacts with one command in the engine &mdash; log replay, recomputed hashes, ledger walk.</p>
+      </div>
+    </div>
+    <div class="pc" id="pc">
+      <div class="hsb-hd" style="padding:0 0 14px; border-bottom:1px solid var(--rule-dk); margin-bottom:20px">
+        <span>PROOF CHAIN &middot; EACH LINK BOUND TO THE LAST BY DIGEST</span>
+      </div>
+      <div class="pc-rail" id="pcRail"></div>
+      <div class="pc-out" id="pcOut"></div>
+    </div>
+
+    <p class="note">No keys, no network, no trusted third party. Anyone can verify a validation receipt with a JSON parser and a hash function. The seller of the evidence is not the validator of the evidence &mdash; that separation is the product.</p>
+  </div>
+</section>
+
+<section class="pad dark">
+  <div class="wrap cols">
+    <div>
+      <span class="kick">ECONOMICS</span>
+      <h2>Evidence at commodity cost, under a hard cap.</h2>
+      <p>The entire published campaign history &mdash; sixteen campaigns, 608 cases against frontier models &mdash; cost <strong>$1.37</strong>. The spend cap is checked before every target call and enforced portfolio-wide; the ledger is append-only and must reconcile with the pack's own claims, or verification fails them apart.</p>
+      <p>The discipline is the cap's existence rather than its number. It was raised from $100 to $150 on 3 November 2026 as headroom, not as a spend plan.</p>
+      <div class="sm" data-spend-meter>
+        <div class="sm-bar"><span class="sm-fill"></span></div>
+        <div class="sm-lb"></div>
+      </div>
+    </div>
+    <div>
+      <span class="kick">AUTHORISATION</span>
+      <h2>Nothing is interpreted. Nothing is sent unauthorised.</h2>
+      <p>A deterministic Scope Guard maps every case to an authorisation basis &mdash; your own deployment, standard API terms, or a registered programme &mdash; and refuses the rest before a single request leaves. The frontier adapter adds a second, independent gate.</p>
+      <p>Receipts name their subject. Mock and free-tier targets must be identified as such, so a receipt cannot imply frontier-class testing that did not happen.</p>
+    </div>
+  </div>
+</section>
+
+<section class="pad">
+  <div class="wrap">
+    <span class="kick">CHECK IT YOURSELF</span>
+    <h2>The verifier is the argument.</h2>
+    <p>Everything above is a claim until you check one. The verifier on this site is the same dependency-free code the engine ships, running locally in your browser &mdash; nothing is uploaded. Load a real published receipt, then break it and watch it fail with a specific reason.</p>
+    <p><a href="verifier.html">Open the receipt verifier</a> &middot; <a href="artifacts.html">Browse the published chihnas</a> &middot; <a href="limits.html">Read what this evidence is not</a></p>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <img src="assets/venture-vertex-logo.png" alt="Venture Vertex">
+      <div class="foot-nav">
+        <a href="index.html">Thesis</a>
+        <a href="verifier.html">Verifier</a>
+        <a href="artifacts.html">Artifacts</a>
+        <a href="limits.html">Honest limits</a>
+        <a href="standards/chihna-receipt-profile-0.1.md">Profile 0.1</a>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>&copy; 2026 Venture Vertex LLC</span>
+      <span>Chihna &mdash; the proof layer. AVH &mdash; the engine.</span>
+      <span class="r">chihna.live</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var s=document.getElementById("burst"); if(!s) return;
+  var n=104,out="";
+  for(var i=0;i<n;i++){
+    var a=(i/n)*Math.PI*2, r1=186, r2=186+((i%4===0)?430:(i%2===0)?336:258);
+    out+='<line x1="'+(600+Math.cos(a)*r1).toFixed(1)+'" y1="'+(600+Math.sin(a)*r1).toFixed(1)+
+         '" x2="'+(600+Math.cos(a)*r2).toFixed(1)+'" y2="'+(600+Math.sin(a)*r2).toFixed(1)+
+         '" stroke-width="'+((i%4===0)?2:1.1)+'"/>';
+  }
+  s.innerHTML=out;
+})();
+</script>
+<script src="assets/chihna-data.js"></script>
+<script src="assets/chihna-instruments.js"></script>
+</body>
+</html>

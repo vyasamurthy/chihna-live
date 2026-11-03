@@ -1,0 +1,448 @@
+
+
+
+
+Network Working Group                                          V. Murthy
+Internet-Draft                                        Venture Vertex LLC
+Intended status: Informational                             November 2026
+Expires: 7 May 2027
+
+
+ Chihna Validation Receipts: Portable Evidence of AI Agent Adversarial
+                                Testing
+               draft-murthy-chihna-validation-receipt-00
+
+Abstract
+
+   Agent receipts are standardizing around what agents DID: execution
+   receipts record tool calls, signed receipts record actions taken, and
+   compliance receipts bind those actions to regulatory obligations.
+   What none of them carry is what agents WITHSTOOD: the adversarial
+   validation evidence that an agent, model, or deployment was tested
+   against attack and what honestly happened.
+
+   This document defines the validation receipt: a portable, digest-
+   bound summary of an adversarial validation campaign, joined to
+   runtime behavior evidence.  It composes with execution receipts
+   rather than competing with them: the runtime half is theirs; the
+   withstood half is this document.  The design principle is radical
+   checkability: no keys, no network, no trusted third party.  SHA-256
+   and the rules in this document.  Anyone can verify a validation
+   receipt with a JSON parser and a hash function.
+
+   The profile's central rule is the honest-statistics rule: verdict
+   counts MUST include inconclusive results, and counts that do not sum
+   are non-conformant.  A campaign judged by a deterministic analyzer
+   routinely produces inconclusive verdicts; hiding them is the exact
+   failure mode this profile exists to make impossible.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+
+
+Murthy                     Expires 7 May 2027                   [Page 1]
+
+Internet-Draft         Chihna Validation Receipts          November 2026
+
+
+   This Internet-Draft will expire on 5 May 2027.
+
+Copyright Notice
+
+   Copyright (c) 2026 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+   license-info) in effect on the date of publication of this document.
+   Please review these documents carefully, as they describe your rights
+   and restrictions with respect to this document.
+
+Table of Contents
+
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
+   2.  Requirements Language . . . . . . . . . . . . . . . . . . . .   3
+   3.  Terminology . . . . . . . . . . . . . . . . . . . . . . . . .   3
+   4.  Receipt Data Model  . . . . . . . . . . . . . . . . . . . . .   4
+   5.  Normative Rules . . . . . . . . . . . . . . . . . . . . . . .   5
+   6.  Verification Algorithm  . . . . . . . . . . . . . . . . . . .   6
+   7.  Relationship to Existing Receipts Work  . . . . . . . . . . .   6
+   8.  Security Considerations . . . . . . . . . . . . . . . . . . .   7
+   9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   7
+   10. Normative References  . . . . . . . . . . . . . . . . . . . .   7
+   11. Informative References  . . . . . . . . . . . . . . . . . . .   7
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   8
+
+1.  Introduction
+
+   Operators deploying AI agents increasingly require evidence that the
+   deployed system was tested against adversarial input: red-team
+   campaigns, jailbreak suites, refusal-marker analysis.  Today that
+   evidence is reported in prose, slide decks, and marketing claims.  A
+   relying party - an insurer, an auditor, a regulator, a customer -
+   cannot check any of it.
+
+   Receipts work in progress elsewhere in the IETF records actions
+   taken: [AER1] defines a portable execution receipt for tool calls,
+   [XAIP] defines signed execution receipts, [ASQAV] defines a
+   compliance profile of signed action receipts, and the SCITT
+   architecture ([SCITT-ARCH]) provides a general claim transparency
+   model.  These answer "what did the agent do?".  None of them answer
+   "what was the agent tested against, and what honestly happened?".
+
+   This document defines the validation receipt, the portable summary of
+   an adversarial validation campaign.  It is a single JSON object that
+   names its subject, states verdict counts under an honest-statistics
+
+
+
+Murthy                     Expires 7 May 2027                   [Page 2]
+
+Internet-Draft         Chihna Validation Receipts          November 2026
+
+
+   rule, binds by SHA-256 digest to the underlying evidence artifacts,
+   and joins to runtime behavior evidence via a hash-chained ledger
+   head.  It is deliberately implementable with no keys and no network:
+   the current threat model is tamper detection and honest self-
+   description, not impersonation resistance (see Section 8).
+
+   The name "chihna" (Sanskrit: mark, symbol) denotes the complete proof
+   object of which the validation receipt is the portable summary:
+   campaign artifacts, behavior ledger, and attestations.  This document
+   specifies only the receipt and its verification; the artifact formats
+   it summarizes are described in terms of the bindings the receipt
+   requires.
+
+2.  Requirements Language
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in BCP
+   14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   capitals, as shown here.
+
+3.  Terminology
+
+   Campaign  A set of adversarial cases executed against a target under
+      an explicit authorization basis, producing a case log and an
+      evidence pack.
+
+   Evidence pack  The structured summary of a campaign: verdict counts,
+      per-case verdicts, learning-loop flags.
+
+   Case log  The per-case record of prompts sent and responses received.
+
+   Behavior ledger  An append-only, hash-chained log of runtime actions
+      (the execution-receipts half).
+
+   Attestation  A digest-bound statement binding an evaluation to its
+      evidence pack.
+
+   Chihna  The complete proof object - campaign artifacts, ledger, and
+      attestations - of which the validation receipt is the portable
+      summary.
+
+   Emitter  An implementation that produces validation receipts.  A
+      conformant emitter can be written from this document alone.
+
+   Verifier  An implementation that checks validation receipts against
+      the rules in this document and, when the underlying artifacts are
+      available, against the artifacts themselves.
+
+
+
+Murthy                     Expires 7 May 2027                   [Page 3]
+
+Internet-Draft         Chihna Validation Receipts          November 2026
+
+
+4.  Receipt Data Model
+
+   A validation receipt is a single JSON object [RFC8259] conforming to
+   the following structure.  Field order is not significant.  An example
+   receipt:
+
+   {
+     "profile": "chihna-validation-receipt/0.1",
+     "subject": {
+       "target": "openrouter-model",
+       "model_id": "anthropic/claude-opus-5.5",
+       "authorization_basis": "default: standard API terms of service"
+     },
+     "campaign": {
+       "campaign_id": "frontier_passport-20261103-045718",
+       "cases_total": 38,
+       "cases_passed": 13,
+       "cases_failed": 0,
+       "cases_inconclusive": 25,
+       "technique_classes": ["direct", "multi-turn", "encoding"],
+       "evidence_pack_sha256": "<sha256 of the pack bytes>",
+       "case_log_sha256": "<sha256 hex of the case log bytes>"
+     },
+     "runtime": {
+       "ledger_agent": "chihna-phase1-opus",
+       "ledger_entries": 39,
+       "ledger_head_sha256": "<entry_hash of the ledger's last entry>"
+     },
+     "attestation": {
+       "evaluation_sha256": "<sha256 the attestation binds to>",
+       "continuity": true
+     },
+     "verification": {
+       "verified": true,
+       "issues": []
+     }
+   }
+
+   The top-level members are:
+
+   profile  The profile identifier and version, a string.  See Section 5
+      rule 1.
+
+   subject  What was tested: the target class, the model identifier, and
+      the authorization basis under which testing was conducted.
+
+   campaign  The campaign identity, verdict counts, technique classes
+
+
+
+
+Murthy                     Expires 7 May 2027                   [Page 4]
+
+Internet-Draft         Chihna Validation Receipts          November 2026
+
+
+      exercised, and the SHA-256 digests binding the receipt to the
+      evidence pack and case log.
+
+   runtime  Optional.  The behavior-ledger half: the ledger agent, entry
+      count, and chain head.  A receipt MAY omit this block entirely
+      (campaign-only receipt).
+
+   attestation  Optional.  The digests of attestations binding the
+      evaluation to its evidence, and whether a continuity attestation
+      is present.
+
+   verification  The issuer's own verification result at issuance.  A
+      claim, not a proof; see Section 5 rule 6.
+
+5.  Normative Rules
+
+   The following rules define conformance of a validation receipt.  A
+   receipt that violates any MUST or MUST NOT in this section is non-
+   conformant, and a conformant verifier MUST reject it.
+
+   1.  profile MUST be exactly "chihna-validation-receipt/0.1" for this
+       version.  Verifiers MUST reject unknown profile versions.
+
+   2.  subject.model_id MUST identify the model under test.  A receipt
+       for a mock or free-tier target MUST carry that identity honestly;
+       the receipt MUST NOT imply frontier-class testing that did not
+       occur.
+
+   3.  *The honest-statistics rule.* The verdict counts MUST include
+       cases_inconclusive.  A receipt whose counts do not sum - passed +
+       failed + inconclusive + not_sent = total - is non-conformant.  A
+       receipt that omits the inconclusive count is non-conformant.  A
+       campaign judged by a deterministic analyzer routinely produces
+       inconclusive verdicts; hiding them is the exact failure mode this
+       profile exists to make impossible.
+
+   4.  campaign.evidence_pack_sha256 MUST be the SHA-256 [FIPS180-4] of
+       the evidence pack file bytes.  A verifier with access to the pack
+       MUST re-derive and compare; mismatch is a verification failure.
+
+   5.  runtime.ledger_head_sha256 MUST be the entry hash of the ledger's
+       final entry.  A receipt MAY omit the runtime block entirely; it
+       MUST NOT present a partial or unchained ledger as continuity.
+
+   6.  verification records the issuer's own verification result at
+       issuance.  It is a claim, not a proof: a verifier MUST re-verify
+       from the evidence rather than trust this block.
+
+
+
+
+Murthy                     Expires 7 May 2027                   [Page 5]
+
+Internet-Draft         Chihna Validation Receipts          November 2026
+
+
+   7.  A receipt is a SUMMARY.  It does not contain the evidence pack,
+       the case log, or the ledger.  It names where they live
+       (campaign_id) and binds to them by digest.  Full verification
+       requires the underlying artifacts.
+
+6.  Verification Algorithm
+
+   A conformant verifier of a validation receipt:
+
+   1.  Checks profile is a known version.
+
+   2.  Checks the count-sum rule (Section 5 rule 3).
+
+   3.  If the evidence pack is available: re-derives its SHA-256 and
+       compares to campaign.evidence_pack_sha256; re-derives verdict
+       counts from the pack and compares to the receipt's counts.
+
+   4.  If the ledger is available: walks the hash chain and checks the
+       head against runtime.ledger_head_sha256.
+
+   5.  Reports each failure separately with its specific reason.
+
+   Digests bind but do not authenticate: a receipt from anyone can claim
+   anything about digests they computed.  This is deliberate and is
+   treated in Section 8.
+
+7.  Relationship to Existing Receipts Work
+
+   This profile composes with, rather than competes against, the
+   receipts work in progress in the IETF:
+
+   Execution receipts (AER-1) [AER1]  Complementary.  AER-1 records
+      actions taken; this profile records attacks withstood.  A chihna
+      can carry an AER-1 receipt as its runtime half.
+
+   Signed execution receipts (XAIP) [XAIP]  Complementary.  XAIP signs
+      the runtime half; this profile summarizes the validation half and
+      binds both by ledger head.
+
+   Compliance receipts (ASQAV) [ASQAV]  Complementary.  The campaign
+      evidence maps to compliance packing (EU AI Act, NIST AI RMF, ISO/
+      IEC 42001); this profile does not redefine that mapping.
+
+   SCITT [SCITT-ARCH]  The ledger chain and attestation digests align
+      with SCITT's claim model; this profile is deliberately
+      implementable without a transparency service, and compatible with
+      one.
+
+
+
+
+Murthy                     Expires 7 May 2027                   [Page 6]
+
+Internet-Draft         Chihna Validation Receipts          November 2026
+
+
+8.  Security Considerations
+
+   Digests bind but do not authenticate: a receipt from anyone can claim
+   anything about digests they computed.  Keyed signing (for example,
+   SCITT-style) is a future profile version, deliberately deferred until
+   relying parties demand it.  The current threat model is tamper
+   detection and honest self-description, not impersonation resistance.
+
+   The receipt contains no secrets by construction (digests and counts
+   only); emitters MUST NOT embed credentials, payloads, or API keys.
+
+   Verifiers MUST treat the verification block as an issuer's claim
+   (Section 5 rule 6) and re-verify from the underlying artifacts when
+   those artifacts are available.
+
+9.  IANA Considerations
+
+   This document has no IANA actions.  The profile identifier chihna-
+   validation-receipt/0.1 is a versioned string local to this
+   specification; a future version MAY register a media type for the
+   receipt format.
+
+10.  Normative References
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/rfc/rfc2119>.
+
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
+
+   [RFC8259]  Bray, T., "The JavaScript Object Notation (JSON) Data
+              Interchange Format", STD 90, RFC 8259,
+              DOI 10.17487/RFC8259, December 2017,
+              <https://www.rfc-editor.org/rfc/rfc8259>.
+
+   [FIPS180-4]
+              National Institute of Standards and Technology, "Secure
+              Hash Standard (SHS)", NIST FIPS Publication 180-4, August
+              2015.
+
+11.  Informative References
+
+
+
+
+
+
+
+Murthy                     Expires 7 May 2027                   [Page 7]
+
+Internet-Draft         Chihna Validation Receipts          November 2026
+
+
+   [AER1]     Zambo, N., "AER-1: A Portable Execution Receipt for AI
+              Agent Tool Calls", Work in Progress, Internet-Draft,
+              draft-zambo-aer1-26, November 2026,
+              <https://datatracker.ietf.org/doc/html/draft-zambo-
+              aer1-26>.  Work in progress.
+
+   [XAIP]     Kumakichi, K., "Signed Execution Receipts for AI Agent
+              Tool Calls (XAIP Receipts)", Work in Progress, Internet-
+              Draft, draft-xkumakichi-xaip-receipts-03, October 2026,
+              <https://datatracker.ietf.org/doc/html/draft-xkumakichi-
+              xaip-receipts-03>.  Work in progress.
+
+   [ASQAV]    Marques, R., "Compliance Profile of Signed Action Receipts
+              for AI Agents", Work in Progress, Internet-Draft, draft-
+              marques-asqav-compliance-receipts-09, October 2026,
+              <https://datatracker.ietf.org/doc/html/draft-marques-
+              asqav-compliance-receipts-09>.  Work in progress.
+
+   [SCITT-ARCH]
+              Internet Engineering Task Force, "An Architecture for
+              Trustworthy and Transparent Digital Supply Chains", Work
+              in Progress, Internet-Draft, draft-ietf-scitt-
+              architecture-22, October 2026,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-scitt-
+              architecture-22>.  Work in progress.  SCITT Working Group.
+
+Author's Address
+
+   Vyasa Murthy
+   Venture Vertex LLC
+   Email: info@venture-vertex.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Murthy                     Expires 7 May 2027                   [Page 8]

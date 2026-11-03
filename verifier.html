@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Receipt verifier — Chihna</title>
+<meta name="description" content="Check a Chihna validation receipt against profile 0.1 in your browser. Nothing is uploaded. The honest-statistics rule is enforced: inconclusive counts are normative and counts must sum.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@300;400&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/chihna.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-in">
+    <a class="brand" href="index.html">
+      <img src="assets/venture-vertex-logo.png" alt="Venture Vertex">
+      <span class="bn">CHIHNA</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Thesis</a>
+      <a href="verifier.html" aria-current="page">Verifier</a>
+      <a href="artifacts.html">Artifacts</a>
+      <a href="limits.html">Honest limits</a>
+    </div>
+  </div>
+</nav>
+
+<section class="pad-s">
+  <div class="wrap">
+    <span class="kick">RECEIPT TIER &middot; PROFILE 0.1 &middot; RUNS LOCALLY</span>
+    <h1>Check the evidence <span class="em">without trusting us</span>.</h1>
+    <p class="lede">This is the same dependency-free verifier the engine ships, running in your browser. Nothing is uploaded and nothing leaves the page. Load a published receipt, then break it and watch the specific rule fail.</p>
+  </div>
+</section>
+
+<section class="pad-s">
+  <div class="wrap">
+    <div class="vform">
+      <label for="receipt" class="meta">RECEIPT JSON</label>
+      <textarea id="receipt" spellcheck="false" aria-label="Paste a validation receipt JSON" placeholder="Paste a validation receipt JSON here, or load the published one below."></textarea>
+
+      <div class="btns">
+        <button class="btn pri" id="verify" type="button">Verify receipt</button>
+        <label class="btn" for="file">Load file&hellip;</label>
+        <input type="file" id="file" accept=".json,application/json" hidden>
+        <button class="btn" id="demo" type="button">Load published receipt</button>
+        <span class="btnsep" aria-hidden="true"></span>
+        <button class="btn" data-tamper="inc" type="button">Remove inconclusives</button>
+        <button class="btn" data-tamper="sum" type="button">Break the sum</button>
+        <button class="btn" data-tamper="profile" type="button">Change profile</button>
+        <button class="btn" data-tamper="digest" type="button">Shorten a digest</button>
+      </div>
+
+      <div class="con">
+        <div class="con-hd">
+          <span>CHIHNA-VERIFIER &middot; RECEIPT TIER</span>
+          <span class="st mono" id="status">IDLE</span>
+        </div>
+        <div class="con-body" id="out">Awaiting a receipt.</div>
+      </div>
+
+      <p class="note">The four buttons on the right mutate the published receipt in one specific way each. They exist because a verifier that only ever says yes is decoration &mdash; the rules are only real if you can watch them bite.</p>
+
+      <div class="tt" id="tt">
+        <div class="tt-hd">
+          <span>TAMPER SEQUENCE &middot; SAME VERIFIER, SAME RECEIPT</span>
+          <span class="st mono" id="ttSt">IDLE</span>
+        </div>
+        <div class="tt-steps" id="ttSteps"></div>
+        <div class="tt-body" id="ttBody">Awaiting the sequence.</div>
+        <div class="tt-ft">
+          <span>Each step mutates one field of the published receipt and re-runs the shipped verifier.</span>
+          <span class="rp"><button id="ttBtn" type="button">Replay sequence</button></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pad dark">
+  <div class="wrap cols">
+    <div>
+      <span class="kick">WHAT THIS CHECKS</span>
+      <h2>The receipt tier.</h2>
+      <p>These are the rules verifiable from the receipt alone, with no artifacts and no network:</p>
+      <ul class="gd">
+        <li>The profile is exactly <span class="mono">chihna-validation-receipt/0.1</span>.</li>
+        <li><span class="mono">cases_inconclusive</span> is present &mdash; a receipt without its inconclusive count is non-conformant.</li>
+        <li>The counts sum: <span class="mono">passed + failed + inconclusive + not_sent = total</span>.</li>
+        <li><span class="mono">evidence_pack_sha256</span> and <span class="mono">case_log_sha256</span> are 64-character lowercase hex.</li>
+        <li>The subject names what was tested, via <span class="mono">subject.model_id</span>.</li>
+        <li>The issuer's own verification block is present, with a boolean result and an issue list.</li>
+      </ul>
+    </div>
+    <div>
+      <span class="kick">WHAT THIS DOES NOT CHECK</span>
+      <h2>The evidence tier.</h2>
+      <p>The receipt tier cannot tell you the campaign happened. Full verification re-derives everything from the artifacts &mdash; log replay, pack counts recomputed from both the log and the pack, the ledger walked end to end rather than trusted at the head, attestation and continuity bindings, acceptance-log integrity.</p>
+      <p>That runs in the engine against a published bundle, not in a browser against a summary. A conformant receipt means the numbers are internally honest. It does not mean they are true.</p>
+      <p><a href="limits.html">The full statement of limits</a></p>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <img src="assets/venture-vertex-logo.png" alt="Venture Vertex">
+      <div class="foot-nav">
+        <a href="index.html">Thesis</a>
+        <a href="verifier.html">Verifier</a>
+        <a href="artifacts.html">Artifacts</a>
+        <a href="limits.html">Honest limits</a>
+        <a href="standards/chihna-receipt-profile-0.1.md">Profile 0.1</a>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>&copy; 2026 Venture Vertex LLC</span>
+      <span>Verification runs locally. Nothing is uploaded.</span>
+      <span class="r">chihna.live</span>
+    </div>
+  </div>
+</footer>
+
+<!-- the engine-shipped verifier, embedded verbatim -->
+<script src="assets/chihna-verifier.js"></script>
+<script>
+(function(){
+  "use strict";
+  var ta=document.getElementById("receipt"),
+      out=document.getElementById("out"),
+      st=document.getElementById("status");
+
+  /* A real published receipt: frontier_passport-20261103-145056. */
+  var DEMO={
+    "profile":"chihna-validation-receipt/0.1",
+    "subject":{"target":"OpenRouterTarget","model_id":"mistralai/mistral-large","authorization_basis":""},
+    "campaign":{
+      "campaign_id":"frontier_passport-20261103-145056",
+      "cases_total":38,"cases_passed":16,"cases_failed":3,
+      "cases_inconclusive":19,"cases_not_sent":0,
+      "technique_classes":[""],
+      "evidence_pack_sha256":"acdb43114fd8d4860713f879957ea875c43b41f78f79dd7c0a808fdacb541f06",
+      "case_log_sha256":"b5740cd22fc387c79caddc736b12c4806339a13b9dbb6ceef83ae669a1316f9d"
+    },
+    "runtime":{"ledger_agent":"vyasamurthy","ledger_entries":39,
+      "ledger_head_sha256":"6d3d4e99ee3bfbb1cd7f1b7a83264a7b29d22a524bcb4a78c70cd29dce0e1052"},
+    "attestation":{"evaluation_sha256":"acdb43114fd8d4860713f879957ea875c43b41f78f79dd7c0a808fdacb541f06","continuity":true},
+    "verification":{"verified":true,"issues":[]}
+  };
+
+  function esc(s){return String(s).replace(/[&<>]/g,function(c){
+    return c==="&"?"&amp;":c==="<"?"&lt;":"&gt;";});}
+
+  function counts(r){
+    try{
+      var c=r.campaign;
+      if(!c) return "";
+      var p=c.cases_passed,f=c.cases_failed,i=c.cases_inconclusive,
+          n=c.cases_not_sent,t=c.cases_total;
+      var sum=(p||0)+(f||0)+(i===undefined?0:i)+(n||0);
+      var incTxt=(i===undefined)?'<span class="bad">absent</span>':'<span class="gold">'+i+' inconclusive</span>';
+      return "\n  subject      "+esc((r.subject&&r.subject.model_id)||"(unnamed)")+
+             "\n  campaign     "+esc(c.campaign_id||"(none)")+
+             "\n  counts       "+p+" passed &middot; "+f+" failed &middot; "+incTxt+" &middot; "+n+" not sent"+
+             "\n  sum          "+sum+" of "+t+" total\n";
+    }catch(e){return "";}
+  }
+
+  function show(r){
+    var res=window.ChihnaVerifier.validateReceipt(r);
+    var body="";
+    if(res.ok){
+      st.textContent="CONFORMANT"; st.className="st mono ok";
+      body='<span class="ok">conformant: yes</span>\n'+counts(r)+
+           '\nAll receipt-tier rules of profile 0.1 hold. This says the receipt is\ninternally honest. It does not say the campaign happened — that is the\nevidence tier.';
+    }else{
+      st.textContent="NON-CONFORMANT"; st.className="st mono bad";
+      body='<span class="bad">conformant: no</span>\n'+counts(r)+'\n';
+      res.issues.forEach(function(i){ body+='<span class="bad">  ✗ '+esc(i)+'</span>\n'; });
+    }
+    out.innerHTML=body;
+  }
+
+  function parseAndShow(){
+    var txt=ta.value.trim();
+    if(!txt){ st.textContent="IDLE"; st.className="st mono";
+      out.textContent="Paste a receipt, or press “Load published receipt”."; return; }
+    var r;
+    try{ r=JSON.parse(txt); }
+    catch(e){
+      st.textContent="NOT JSON"; st.className="st mono bad";
+      out.innerHTML='<span class="bad">conformant: no</span>\n\n<span class="bad">  ✗ receipt is not valid JSON: '+esc(e.message)+'</span>';
+      return;
+    }
+    show(r);
+  }
+
+  function load(obj){ ta.value=JSON.stringify(obj,null,2); parseAndShow(); }
+
+  function tamper(kind){
+    var r=JSON.parse(JSON.stringify(DEMO));
+    if(kind==="inc"){ delete r.campaign.cases_inconclusive; }
+    else if(kind==="sum"){ r.campaign.cases_passed=35; }
+    else if(kind==="profile"){ r.profile="chihna-validation-receipt/0.2"; }
+    else if(kind==="digest"){ r.campaign.evidence_pack_sha256="acdb4311"; }
+    load(r);
+  }
+
+  document.getElementById("verify").addEventListener("click",parseAndShow);
+  document.getElementById("demo").addEventListener("click",function(){ load(DEMO); });
+  [].slice.call(document.querySelectorAll("[data-tamper]")).forEach(function(b){
+    b.addEventListener("click",function(){ tamper(b.getAttribute("data-tamper")); });
+  });
+  document.getElementById("file").addEventListener("change",function(e){
+    var f=e.target.files&&e.target.files[0]; if(!f) return;
+    var fr=new FileReader();
+    fr.onload=function(){ ta.value=fr.result; parseAndShow(); };
+    fr.readAsText(f);
+  });
+
+  /* ---------- tamper sequence ---------- */
+  (function(){
+    var box=document.getElementById("tt"); if(!box) return;
+    var stepsEl=document.getElementById("ttSteps"), body=document.getElementById("ttBody"),
+        st=document.getElementById("ttSt"), btn=document.getElementById("ttBtn");
+    var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var SEQ=[
+      {l:"PUBLISHED RECEIPT", mut:null,
+       say:"the receipt exactly as published"},
+      {l:"REMOVE INCONCLUSIVES", mut:function(r){ delete r.campaign.cases_inconclusive; },
+       say:"drop cases_inconclusive — the field the industry omits"},
+      {l:"BREAK THE SUM", mut:function(r){ r.campaign.cases_passed=35; },
+       say:"inflate cases_passed from 16 to 35"},
+      {l:"CHANGE PROFILE", mut:function(r){ r.profile="chihna-validation-receipt/0.2"; },
+       say:"claim a profile version that does not exist"},
+      {l:"SHORTEN A DIGEST", mut:function(r){ r.campaign.evidence_pack_sha256="acdb4311"; },
+       say:"truncate evidence_pack_sha256 to 8 characters"}
+    ];
+    stepsEl.innerHTML=SEQ.map(function(s){return '<div class="tt-step">'+s.l+"</div>";}).join("");
+    var stepEls=[].slice.call(stepsEl.children), timers=[], running=false;
+
+    function render(i){
+      var s=SEQ[i], r=JSON.parse(JSON.stringify(DEMO));
+      if(s.mut) s.mut(r);
+      var res=window.ChihnaVerifier.validateReceipt(r);
+      stepEls.forEach(function(e,j){ e.className="tt-step"+(j===i?" on":(j<i?" seen":"")); });
+      var txt='<span class="g">'+s.say+"</span>\n\n";
+      if(res.ok){
+        st.textContent="CONFORMANT"; st.className="st mono ok";
+        txt+='<span class="ok">conformant: yes</span>\n'+
+             "  16 passed · 3 failed · 19 inconclusive · 0 not sent = 38 total";
+      }else{
+        st.textContent="NON-CONFORMANT"; st.className="st mono bad";
+        txt+='<span class="bad">conformant: no</span>\n';
+        res.issues.forEach(function(x){ txt+='<span class="bad">  ✗ '+esc(x)+"</span>\n"; });
+      }
+      body.innerHTML=txt;
+    }
+    function run(){
+      if(running) return; running=true;
+      timers.forEach(clearTimeout); timers=[];
+      btn.textContent="Replaying…";
+      SEQ.forEach(function(_,i){
+        timers.push(setTimeout(function(){ render(i); }, reduce?0:i*2100));
+      });
+      timers.push(setTimeout(function(){
+        btn.textContent="Replay sequence"; running=false;
+      }, reduce?0:SEQ.length*2100));
+    }
+    btn.addEventListener("click",run);
+    new IntersectionObserver(function(es,o){
+      es.forEach(function(e){ if(e.isIntersecting){ run(); o.unobserve(e.target); } });
+    },{threshold:.25}).observe(box);
+  })();
+})();
+</script>
+</body>
+</html>

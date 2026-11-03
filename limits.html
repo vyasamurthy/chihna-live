@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Honest limits — Chihna</title>
+<meta name="description" content="What this evidence is and is not. Digests detect tampering, they do not authenticate. Inconclusive is not pass. Attestations are unsigned by design.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@300;400&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/chihna.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-in">
+    <a class="brand" href="index.html">
+      <img src="assets/venture-vertex-logo.png" alt="Venture Vertex">
+      <span class="bn">CHIHNA</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Thesis</a>
+      <a href="verifier.html">Verifier</a>
+      <a href="artifacts.html">Artifacts</a>
+      <a href="limits.html" aria-current="page">Honest limits</a>
+    </div>
+  </div>
+</nav>
+
+<section class="pad-s">
+  <div class="wrap">
+    <span class="kick">WHAT THIS IS NOT</span>
+    <h1>The limits, stated <span class="em">as loudly as the claims</span>.</h1>
+    <p class="lede">A proof layer that advertises only its strengths is doing the thing it was built to prevent. Everything below is a real boundary of the current design, not a disclaimer written by a lawyer.</p>
+  </div>
+</section>
+
+<section class="pad-s">
+  <div class="wrap">
+    <div class="cards">
+      <div>
+        <span class="meta">01 &middot; TRUST MODEL</span>
+        <h3>Digests bind. They do not authenticate.</h3>
+        <p>Attestations and receipts are unsigned digests. They detect tampering; they do not resist impersonation. Nothing here proves <em>who</em> issued a receipt &mdash; only that its contents have not changed since issuance.</p>
+        <p>That is deliberate, not an oversight. Keyless verification is what lets anyone check a receipt with a JSON parser and a hash function, with no keys, no network and no trusted third party.</p>
+      </div>
+      <div>
+        <span class="meta">02 &middot; VERDICTS</span>
+        <h3>Inconclusive is not pass.</h3>
+        <p>210 of the 608 published cases are inconclusive. They are stated on the receipt, in the report, in the artifacts table, and here. They are not folded into a pass rate and they are not rounded away.</p>
+        <p>An inconclusive case means the analysis could not responsibly resolve it. Reading it as a pass reintroduces exactly the overclaiming this format exists to make non-conformant.</p>
+      </div>
+      <div>
+        <span class="meta">03 &middot; SCOPE OF EVIDENCE</span>
+        <h3>CI validates the implementation, not the findings.</h3>
+        <p>The source and mock test suite proves the harness behaves as specified. It says nothing about any model's behaviour.</p>
+        <p>Frontier findings are only the published campaigns on the artifacts page, with their subjects named and their inconclusives attached. Mock and free-tier targets are identified as such, so a receipt cannot imply frontier-class testing that did not occur.</p>
+      </div>
+      <div>
+        <span class="meta">04 &middot; RECEIPT TIER</span>
+        <h3>A conformant receipt is not a true one.</h3>
+        <p>The browser verifier checks what is verifiable from the receipt alone: the profile version, the honest-statistics rule, the digest shapes, the named subject. It confirms the numbers are internally consistent.</p>
+        <p>It cannot confirm the campaign happened. The issuer's own <span class="mono">verification.verified</span> field is a claim, and the profile says so. Only the evidence tier, run against the artifacts, re-derives the result.</p>
+      </div>
+      <div>
+        <span class="meta">05 &middot; AUTONOMY</span>
+        <h3>Nothing submits or redesigns itself.</h3>
+        <p>The harness does not autonomously submit to bounty programmes. Acceptance is a separate, governed decision, and approving over a failing gate requires an explicit force flag that attaches the failed gates to the record.</p>
+        <p>The learning loop is not an autonomous redesign engine. It produces flags; humans accept them against gates.</p>
+      </div>
+      <div>
+        <span class="meta">06 &middot; SECURITY POSTURE</span>
+        <h3>No guarantee beyond tamper detection.</h3>
+        <p>Nothing on this site asserts that a tested system is secure, that an absence of findings is an absence of vulnerabilities, or that a passing campaign transfers to a different deployment, version or configuration.</p>
+        <p>A campaign is evidence about what happened in that campaign, against that named subject, at that time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pad dark">
+  <div class="wrap">
+    <span class="kick">GATED &mdash; NOT SHIPPED</span>
+    <h2>The roadmap, with its triggers rather than its dates.</h2>
+    <p>Nothing below exists today. Each item is listed with the condition that would start it, because a roadmap stated as capability is the same overclaiming in a different tense.</p>
+    <div class="tbwrap">
+      <table class="tb">
+        <thead><tr><th>NEXT STEP</th><th>GATE</th></tr></thead>
+        <tbody>
+          <tr><td>Keyed signing of receipts and attestations, SCITT-style</td><td>A relying party demands authentication, not just tamper detection</td></tr>
+          <tr><td>Receipt media-type registration with IETF</td><td>The draft is submitted and cited</td></tr>
+          <tr><td>Working-group adoption or standards track</td><td>The receipts wave consolidates, or a WG asks</td></tr>
+          <tr><td>Frontier expansion &mdash; more models, more technique classes</td><td>The spend cap holds and the acceptance gates stay honest</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">The IETF draft is prepared and idnits-clean. It has not been submitted. Media-type registration is gated on that submission, and this page will say so until it changes.</p>
+  </div>
+</section>
+
+<section class="pad">
+  <div class="wrap cols">
+    <div>
+      <span class="kick">THE STANDARD WE HOLD OURSELVES TO</span>
+      <h2>The evaluator is under the same rules as the evaluated.</h2>
+      <p>An evaluator that cannot show its own error bars is not evidence-grade either. The learning loop records critic overturn rates, rejection-reason feedback, redesign flags against technique classes, and judge calibration.</p>
+      <p>Where an acceptance was forced over a failing gate, the forcing and its reason are on the record rather than smoothed out of it.</p>
+    </div>
+    <div>
+      <span class="kick">IF SOMETHING HERE IS WRONG</span>
+      <h2>The verifier is the complaints procedure.</h2>
+      <p>Every number on this site is derived from a published bundle, and every published campaign links the receipt behind it. If a count does not reconcile, the verifier will say so about our receipts exactly as readily as about anyone else's.</p>
+      <p><a href="verifier.html">Check a receipt</a> &middot; <a href="artifacts.html">Browse the campaigns</a></p>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <img src="assets/venture-vertex-logo.png" alt="Venture Vertex">
+      <div class="foot-nav">
+        <a href="index.html">Thesis</a>
+        <a href="verifier.html">Verifier</a>
+        <a href="artifacts.html">Artifacts</a>
+        <a href="limits.html">Honest limits</a>
+        <a href="standards/chihna-receipt-profile-0.1.md">Profile 0.1</a>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>&copy; 2026 Venture Vertex LLC</span>
+      <span>Unsigned by design. Tamper-evident, not impersonation-resistant.</span>
+      <span class="r">chihna.live</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
