@@ -211,6 +211,30 @@
 
   document.getElementById("verify").addEventListener("click",parseAndShow);
   document.getElementById("demo").addEventListener("click",function(){ load(DEMO); });
+
+  /* ?r=<campaign_id> loads that published receipt and checks it. */
+  (function(){
+    var m=/[?&]r=([A-Za-z0-9_.-]+)/.exec(location.search);
+    if(!m) return;
+    var id=m[1];
+    var note=document.createElement("p");
+    note.className="note";
+    note.innerHTML='Loading published receipt <span class="mono">'+esc(id)+'</span>…';
+    ta.parentNode.insertBefore(note, ta);
+    fetch("receipts/"+encodeURIComponent(id)+".json")
+      .then(function(r){ if(!r.ok) throw new Error("HTTP "+r.status); return r.json(); })
+      .then(function(j){
+        note.innerHTML='Checking the published receipt for <span class="mono">'+esc(id)+
+          '</span> — <a href="receipts/'+encodeURIComponent(id)+'.json">raw JSON</a> '+
+          '&middot; <a href="artifacts.html">back to artifacts</a>';
+        load(j);
+      })
+      .catch(function(e){
+        note.innerHTML='Could not load <span class="mono">'+esc(id)+
+          '</span> ('+esc(e.message)+'). Paste a receipt below, or '+
+          '<a href="artifacts.html">return to the artifacts</a>.';
+      });
+  })();
   [].slice.call(document.querySelectorAll("[data-tamper]")).forEach(function(b){
     b.addEventListener("click",function(){ tamper(b.getAttribute("data-tamper")); });
   });
